@@ -1,33 +1,23 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'Welcome to the HashRails API reference'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+HashRails provides financial services API for payments, virtual accounts, and digital transactions, and this documentation covers all available endpoints with detailed examples and response schemas.
 
-## Welcome
+## Base URLs
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+- **Production**: `https://api.hashrails.xyz/`
+- **Staging**: `https://api.railsfromthecrypt.com/`
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+## Rate Limiting
 
-## Authentication
+API requests are rate limited to ensure fair usage. Rate limits are applied per API key and reset every hour.
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+## Getting Started
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+1. Obtain your API key from the HashRails dashboard
+2. Include the API key in the `X-API-Key` header for all requests
+3. Start making API calls to our endpoints
+
+For detailed authentication instructions, see the [Authentication](/api-reference/authentication) section.

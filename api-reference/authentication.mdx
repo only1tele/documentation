@@ -1,0 +1,30 @@
+---
+title: Authentication
+hide-feedback: true
+---
+
+The HashRails API uses API keys for authentication, and every request to the API must include your API key to authenticate your requests.
+
+All API requests should include your API key in an `X-API-Key` HTTP header as follows:
+
+```bash
+X-API-Key: YOUR_API_KEY
+```
+
+### Making requests
+
+You can paste the command below into your terminal to run your first API request. Make sure to replace `$YOUR_API_KEY` with your secret API key.
+
+```bash
+curl 'https://api.railsfromthecrypt.com/v1/recipients' \
+  -H 'Content-Type: application/json' \
+  -H 'X-API-Key: $YOUR_API_KEY'
+```
+
+Example with curl:
+
+```bash
+curl -X GET 'https://api.railsfromthecrypt.com/v1/recipients' \
+  -H 'Content-Type: application/json' \
+  -H 'X-API-Key: YOUR_API_KEY'
+```
