@@ -1,97 +1,23 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: 'Introduction'
+description: 'Welcome to the HashRails API reference'
 ---
 
-## Setting up
+HashRails provides financial services API for payments, virtual accounts, and digital transactions, and this documentation covers all available endpoints with detailed examples and response schemas.
 
-Get your documentation site up and running in minutes.
+## Base URLs
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+- **Production**: `https://api.hashrails.xyz/`
+- **Staging**: `https://api.railsfromthecrypt.com/`
 
-## Make it yours
+## Rate Limiting
 
-Design a docs site that looks great and empowers your users.
+API requests are rate limited to ensure fair usage. Rate limits are applied per API key and reset every hour.
 
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
+## Getting Started
 
-## Create beautiful pages
+1. Obtain your API key from the HashRails dashboard
+2. Include the API key in the `X-API-Key` header for all requests
+3. Start making API calls to our endpoints
 
-Everything you need to create world-class documentation.
-
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
-
-## Need inspiration?
-
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+For detailed authentication instructions, see the [Authentication](/api-reference/authentication) section.

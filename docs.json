@@ -12,26 +12,7 @@
     "tabs": [
       {
         "tab": "Documentation",
-        "groups": [
-          {
-            "group": "Core Concepts",
-            "pages": [
-              "concepts/overview",
-              "concepts/rate-limiting",
-              "concepts/webhooks",
-              "concepts/error-handling"
-            ]
-          },
-          {
-            "group": "Integration Guides",
-            "pages": [
-              "guides/virtual-accounts",
-              "guides/transactions",
-              "guides/customers",
-              "guides/recipients"
-            ]
-          }
-        ]
+        "groups": []
       },
       {
         "tab": "API reference",
@@ -70,8 +51,8 @@
     ]
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "https://myvalour-ramp.s3.eu-north-1.amazonaws.com/logo.png",
+    "dark": "https://myvalour-ramp.s3.eu-north-1.amazonaws.com/logo.png"
   },
   "navbar": {
     "links": [
