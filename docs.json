@@ -11,31 +11,24 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "Getting started",
-            "pages": ["index", "quickstart", "development"]
-          },
-          {
-            "group": "Customization",
-            "pages": ["essentials/settings", "essentials/navigation"]
-          },
-          {
-            "group": "Writing content",
+            "group": "Core Concepts",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "concepts/overview",
+              "concepts/rate-limiting",
+              "concepts/webhooks",
+              "concepts/error-handling"
             ]
           },
           {
-            "group": "AI tools",
+            "group": "Integration Guides",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "guides/virtual-accounts",
+              "guides/transactions",
+              "guides/customers",
+              "guides/recipients"
             ]
           }
         ]
@@ -55,8 +48,7 @@
             "pages": [
               "api-reference/recipient/get",
               "api-reference/recipient/get-by-id",
-              "api-reference/recipient/create",
-              "api-reference/recipient/delete"
+              "api-reference/recipient/create"
             ]
           },
           {
