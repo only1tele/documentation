@@ -10,154 +10,629 @@
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
+      "url": "https://api.railsfromthecrypt.com"
+    },
     {
-      "bearerAuth": []
+      "url": "https://api.hashrails.xyz"
     }
   ],
+
   "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
+    "/v1/recipients": {
+      "post": {
+        "operationId": "PublicRecipientController_",
         "parameters": [
           {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "API key for authentication",
+            "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicCreateRecipientDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recipient created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Recipient created successfully"
+                    },
+                    "data": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/PublicCryptoRecipientResponseDto"
+                        },
+                        {
+                          "$ref": "#/components/schemas/PublicFiatRecipientResponseDto"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a new recipient (crypto or fiat)",
+        "tags": ["Public Recipients"]
+      },
+      "get": {
+        "operationId": "PublicRecipientController_",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "API key for authentication",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "description": "Recipient type e.g crypto, fiat",
+            "schema": {
+              "enum": ["crypto", "fiat"],
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Recipients retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Recipients retrieved successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "next": {
+                          "type": "string",
+                          "example": "http://api.example.com/v1/public/recipients?page=2"
+                        },
+                        "prev": {
+                          "type": "string",
+                          "example": null
+                        },
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/PublicCryptoRecipientResponseDto"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all recipients for the current client",
+        "tags": ["Public Recipients"]
+      }
+    },
+    "/v1/recipients/{id}": {
+      "get": {
+        "operationId": "PublicRecipientController_",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "API key for authentication",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Recipient ID",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Virtual account fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Virtual account fetched successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PublicCryptoRecipientResponseDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a recipient by ID",
+        "tags": ["Public Recipients"]
+      }
+    },
+    "/v1/virtual-accounts": {
+      "get": {
+        "description": "Retrieve paginated list of virtual accounts for the authenticated client",
+        "operationId": "PublicVirtualAccountController_",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "API key for authentication",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Items per page",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "currency",
+            "required": false,
+            "in": "query",
+            "description": "Currency for the virtual account e.g USD, NGN, CAD",
+            "schema": {
+              "enum": ["USD", "NGN", "CAD"],
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Virtual accounts retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Virtual accounts retrieved successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "next": {
+                          "type": "string",
+                          "example": "http://api.example.com/v1/public/virtual-accounts?page=2"
+                        },
+                        "prev": {
+                          "type": "string",
+                          "example": null
+                        },
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/VirtualAccountWithRecipientDto"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "summary": "Get all virtual accounts for the authenticated client",
+        "tags": ["Public Virtual Accounts API"]
+      },
+      "post": {
+        "description": "Creates a new virtual account for the authenticated client",
+        "operationId": "PublicVirtualAccountController_",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "API key for authentication",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicCreateVirtualAccountDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Virtual account created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Virtual account created successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PublicVirtualAccountResponseDto"
+                    }
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Unexpected error",
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Invalid API key"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "summary": "Create a new virtual account",
+        "tags": ["Public Virtual Accounts API"]
+      }
+    },
+    "/v1/virtual-accounts/{id}": {
+      "get": {
+        "description": "Get a virtual account by ID",
+        "operationId": "PublicVirtualAccountController_",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "API key for authentication",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Virtual Account ID",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Virtual account fetched successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Virtual account fetched successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PublicVirtualAccountResponseDto"
+                    }
+                  }
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Virtual account not found"
           }
-        }
+        },
+        "summary": "Get a virtual account by ID",
+        "tags": ["Public Virtual Accounts API"]
       },
-      "post": {
-        "description": "Creates a new plant in the store",
+      "delete": {
+        "description": "Suspend a virtual account for the authenticated client",
+        "operationId": "PublicVirtualAccountController_",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "API key for authentication",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Virtual Account ID",
+            "schema": {}
+          }
+        ],
         "requestBody": {
-          "description": "Plant to add to the store",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/SuspendVirtualAccountDto"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Virtual account suspended successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Virtual account suspended successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/VirtualAccountWithRecipientDto"
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "unexpected error",
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Virtual account not found"
+          }
+        },
+        "summary": "Suspend a virtual account",
+        "tags": ["Public Virtual Accounts API"]
+      }
+    },
+    "/v1/virtual-accounts/{id}/activities": {
+      "get": {
+        "description": "Get a virtual account activities by ID",
+        "operationId": "PublicVirtualAccountController_",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "API key for authentication",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Virtual Account ID",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Virtual accounts retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Virtual accounts retrieved successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "next": {
+                          "type": "string",
+                          "example": null
+                        },
+                        "prev": {
+                          "type": "string",
+                          "example": null
+                        },
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/PublicVirtualAccountActivityResponseDto"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Virtual account not found"
+          }
+        },
+        "summary": "Get a virtual account activities by ID",
+        "tags": ["Public Virtual Accounts API"]
+      }
+    },
+    "/v1/banks/lookup": {
+      "post": {
+        "description": "Lookup an account by account number and bank code",
+        "operationId": "PublicBankController_",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "API key for authentication",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicLookupAccountRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Account lookup successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Account lookup successful"
+                    },
+                    "data": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/PublicLookupAccountResponseDto"
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }
           }
-        }
+        },
+        "summary": "Lookup an account by account number and bank code",
+        "tags": ["Public Banks"]
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/v1/banks": {
+      "get": {
+        "operationId": "PublicBankController_",
+        "description": "Get all banks",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "API key for authentication",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "Banks retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Banks retrieved successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/PublicBankResponseDto"
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
           }
-        }
-      }
-    }
-  },
-  "webhooks": {
-    "/plant/webhook": {
-      "post": {
-        "description": "Information about a new plant added to the store",
-        "requestBody": {
-          "description": "Plant added to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully"
-          }
-        }
+        "summary": "Get all banks",
+        "tags": ["Public Banks"]
       }
     }
   },
+
   "components": {
     "schemas": {
       "Plant": {
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "type": "object",
         "properties": {
           "name": {
@@ -176,9 +651,7 @@
             "$ref": "#/components/schemas/Plant"
           },
           {
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "type": "object",
             "properties": {
               "id": {
@@ -190,11 +663,492 @@
           }
         ]
       },
-      "Error": {
+      "RecipientDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Recipient ID",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "network": {
+            "type": "string",
+            "description": "Network for the recipient",
+            "example": "ethereum"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency for the recipient",
+            "example": "USDC"
+          },
+          "wallet_address": {
+            "type": "string",
+            "description": "Wallet address for the recipient",
+            "example": "0x1234567890abcdef"
+          }
+        },
+        "required": ["id", "network", "currency", "wallet_address"]
+      },
+      "PublicCryptoRecipientResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "rec_01J8V9ZP3A7"
+          },
+          "type": {
+            "type": "string",
+            "example": "crypto"
+          },
+          "name": {
+            "type": "string",
+            "example": "Vendor Payment"
+          },
+          "active": {
+            "type": "boolean",
+            "example": true
+          },
+          "details": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "example": "Polygon"
+              },
+              "wallet_address": {
+                "type": "string",
+                "example": "0x3fA91D6b84bE2c0BFD7647a92E5B1A2Ec6F8C91e"
+              },
+              "symbol": {
+                "type": "string",
+                "example": "USDT"
+              }
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2025-10-10T09:15:21Z"
+          }
+        },
+        "required": ["id", "type", "name", "active", "details", "created_at"]
+      },
+      "PublicFiatRecipientResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "rec_01J8V9ZP3A7"
+          },
+          "type": {
+            "type": "string",
+            "example": "fiat"
+          },
+          "name": {
+            "type": "string",
+            "example": "Acme Ltd"
+          },
+          "active": {
+            "type": "boolean",
+            "example": true
+          },
+          "details": {
+            "type": "object",
+            "properties": {
+              "bank_name": {
+                "type": "string",
+                "example": "Wema Bank"
+              },
+              "account_number": {
+                "type": "string",
+                "example": "0123456789"
+              },
+              "account_name": {
+                "type": "string",
+                "example": "ACME LTD"
+              },
+              "currency": {
+                "type": "string",
+                "example": "NGN"
+              }
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2025-10-10T09:15:21Z"
+          }
+        },
+        "required": ["id", "type", "name", "active", "details", "created_at"]
+      },
+      "PublicCreateRecipientDto": {
+        "type": "object",
+        "properties": {
+          "wallet_address": {
+            "type": "string",
+            "example": "0x3fA91D6b84bE2c0BFD7647a92E5B1A2Ec6F8C91e"
+          },
+          "network": {
+            "type": "string",
+            "example": "Polygon"
+          },
+          "account_number": {
+            "type": "string",
+            "example": "1234567890"
+          },
+          "bank_code": {
+            "type": "string",
+            "example": "123"
+          },
+          "name": {
+            "type": "string",
+            "example": "Vendor Payment"
+          },
+          "symbol": {
+            "type": "string",
+            "example": "USDC",
+            "enum": ["USDC", "USDT", "BTC", "ETH", "BNB", "MATIC"]
+          },
+          "currency": {
+            "type": "string",
+            "example": "NGN",
+            "enum": ["NGN", "GHS", "KES", "ZAR", "USD", "EUR", "GBP"]
+          },
+          "type": {
+            "type": "string",
+            "example": "crypto",
+            "enum": ["crypto", "fiat"]
+          }
+        },
+        "required": ["name", "type"]
+      },
+      "VirtualAccountWithRecipientDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the virtual account",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "account_number": {
+            "type": "string",
+            "description": "Account number for the virtual account",
+            "example": "1234567890"
+          },
+          "account_name": {
+            "type": "string",
+            "description": "Name of the virtual account",
+            "example": "John Doe Business Account"
+          },
+          "reference": {
+            "type": "string",
+            "description": "Unique reference for the virtual account",
+            "example": "VA-001"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of virtual account",
+            "enum": ["static", "dynamic"],
+            "example": "static"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency for the virtual account",
+            "enum": ["USD", "NGN", "CAD"],
+            "example": "USD"
+          },
+          "bank_name": {
+            "type": "string",
+            "description": "Name of the bank",
+            "example": "Test Bank"
+          },
+          "is_active": {
+            "type": "boolean",
+            "description": "Whether the virtual account is active",
+            "example": true
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Creation date of the virtual account",
+            "example": "2024-01-01T00:00:00Z"
+          },
+          "recipient": {
+            "description": "Recipient information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RecipientDto"
+              }
+            ]
+          }
+        },
         "required": [
-          "error",
-          "message"
-        ],
+          "id",
+          "account_number",
+          "account_name",
+          "reference",
+          "type",
+          "currency",
+          "bank_name",
+          "is_active",
+          "created_at",
+          "recipient"
+        ]
+      },
+      "PublicCreateVirtualAccountDto": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string",
+            "description": "Currency for the virtual account",
+            "enum": ["USD", "NGN", "CAD"],
+            "example": "USD"
+          },
+          "settlement_id": {
+            "type": "string",
+            "description": "Settlement ID for the virtual account",
+            "example": "1263995f-e317-44ab-b8ea-3dc2dc5a08bb"
+          },
+          "bvn": {
+            "type": "string",
+            "description": "Expiry date for the virtual account",
+            "example": "12345678901"
+          }
+        },
+        "required": ["currency"]
+      },
+      "PublicVirtualAccountResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the virtual account",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "account_number": {
+            "type": "string",
+            "description": "Account number for the virtual account",
+            "example": "1234567890"
+          },
+          "account_name": {
+            "type": "string",
+            "description": "Name of the virtual account",
+            "example": "John Doe Business Account"
+          },
+          "reference": {
+            "type": "string",
+            "description": "Unique reference for the virtual account",
+            "example": "VA-001"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of virtual account",
+            "enum": ["static", "dynamic"],
+            "example": "static"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency for the virtual account",
+            "enum": ["USD", "NGN", "CAD"],
+            "example": "USD"
+          },
+          "bank_name": {
+            "type": "string",
+            "description": "Name of the bank",
+            "example": "Test Bank"
+          },
+          "is_active": {
+            "type": "boolean",
+            "description": "Whether the virtual account is active",
+            "example": true
+          },
+          "recipient": {
+            "description": "Settlement information for the virtual account",
+            "example": {
+              "id": "1263995f-e317-44ab-b8ea-3dc2dc5a08bb",
+              "network": "ethereum",
+              "currency": "USDC",
+              "wallet_address": "0x3fA91D6b84bE2c0BFD7647a92E5B1A2Ec6F8C91e"
+            },
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RecipientDto"
+              }
+            ]
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Creation date of the virtual account",
+            "example": "2024-01-01T00:00:00Z"
+          }
+        },
+        "required": [
+          "id",
+          "account_number",
+          "account_name",
+          "reference",
+          "type",
+          "currency",
+          "bank_name",
+          "is_active",
+          "recipient",
+          "created_at"
+        ]
+      },
+      "PublicVirtualAccountActivityResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the virtual account activity",
+            "example": "f78af223-66a5-433c-b605-2fe137af311e"
+          },
+          "reference": {
+            "type": "string",
+            "description": "Transaction reference",
+            "example": "TXN-2Z82FVYO6BW22RC7"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Transaction amount",
+            "example": 2000
+          },
+          "status": {
+            "type": "string",
+            "description": "Transaction status",
+            "example": "completed"
+          },
+          "transaction_hash": {
+            "type": "string",
+            "description": "Transaction hash",
+            "example": "xxxxx"
+          },
+          "session_id": {
+            "type": "string",
+            "description": "Session ID",
+            "example": "100014241726192722501276980553"
+          },
+          "rate": {
+            "type": "string",
+            "description": "Exchange rate",
+            "example": "1552.8750000000"
+          },
+          "fees": {
+            "type": "string",
+            "description": "Transaction fees",
+            "example": "150"
+          },
+          "destination": {
+            "type": "object",
+            "description": "Destination details",
+            "properties": {
+              "amount": {
+                "type": "string",
+                "example": "3105750"
+              },
+              "currency": {
+                "type": "string",
+                "example": "USDC"
+              }
+            }
+          },
+          "sender": {
+            "type": "object",
+            "description": "Sender details",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Kunle Nnaji"
+              },
+              "account_number": {
+                "type": "string",
+                "example": "9035418377"
+              },
+              "bank": {
+                "type": "string",
+                "example": "Paycom (Opay)"
+              },
+              "bank_routing_number": {
+                "type": "string",
+                "example": "-"
+              },
+              "currency": {
+                "type": "string",
+                "example": "NGN"
+              }
+            }
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Creation timestamp",
+            "example": "2025-09-12T15:08:42.000Z"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Last update timestamp",
+            "example": "2025-09-12T15:09:21.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "reference",
+          "amount",
+          "status",
+          "transaction_hash",
+          "session_id",
+          "rate",
+          "fees",
+          "destination",
+          "sender",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "PublicBankResponseDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Wema Bank"
+          },
+          "code": {
+            "type": "string",
+            "example": "044"
+          }
+        },
+        "required": ["name", "code"]
+      },
+      "PublicLookupAccountRequestDto": {
+        "type": "object",
+        "properties": {
+          "account_number": {
+            "type": "string",
+            "example": "1234567890"
+          },
+          "bank_code": {
+            "type": "string",
+            "example": "044"
+          }
+        },
+        "required": ["account_number", "bank_code"]
+      },
+      "PublicLookupAccountResponseDto": {
+        "type": "object",
+        "properties": {
+          "account_number": {
+            "type": "string",
+            "example": "1234567890"
+          },
+          "account_name": {
+            "type": "string",
+            "example": "Wema Bank"
+          }
+        },
+        "required": ["account_number", "account_name"]
+      },
+      "Error": {
+        "required": ["error", "message"],
         "type": "object",
         "properties": {
           "error": {

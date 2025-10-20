@@ -15,18 +15,11 @@
         "groups": [
           {
             "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
+            "pages": ["index", "quickstart", "development"]
           },
           {
             "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
+            "pages": ["essentials/settings", "essentials/navigation"]
           },
           {
             "group": "Writing content",
@@ -52,18 +45,30 @@
         "groups": [
           {
             "group": "API documentation",
+            "pages": ["api-reference/introduction"]
+          },
+          {
+            "group": "Recipients",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/recipient/get",
+              "api-reference/recipient/get-by-id",
+              "api-reference/recipient/create",
+              "api-reference/recipient/delete"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Virtual Accounts",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/virtual-account/get",
+              "api-reference/virtual-account/get-by-id",
+              "api-reference/virtual-account/create",
+              "api-reference/virtual-account/suspend-by-id",
+              "api-reference/virtual-account/get-accout-activities"
             ]
+          },
+          {
+            "group": "Banks",
+            "pages": ["api-reference/bank/get", "api-reference/bank/lookup"]
           }
         ]
       }
@@ -101,16 +106,7 @@
     }
   },
   "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+    "options": ["copy", "view", "chatgpt", "claude"]
   },
   "footer": {
     "socials": {
