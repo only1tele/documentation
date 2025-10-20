@@ -9,44 +9,33 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "tabs": [
+    "groups": [
       {
-        "tab": "Documentation",
-        "groups": []
+        "group": "Getting Started",
+        "pages": ["index", "api-reference/authentication"]
+      },
+
+      {
+        "group": "Recipients",
+        "pages": [
+          "api-reference/recipient/get",
+          "api-reference/recipient/get-by-id",
+          "api-reference/recipient/create"
+        ]
       },
       {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction",
-              "api-reference/authentication"
-            ]
-          },
-          {
-            "group": "Recipients",
-            "pages": [
-              "api-reference/recipient/get",
-              "api-reference/recipient/get-by-id",
-              "api-reference/recipient/create"
-            ]
-          },
-          {
-            "group": "Virtual Accounts",
-            "pages": [
-              "api-reference/virtual-account/get",
-              "api-reference/virtual-account/get-by-id",
-              "api-reference/virtual-account/create",
-              "api-reference/virtual-account/suspend-by-id",
-              "api-reference/virtual-account/get-accout-activities"
-            ]
-          },
-          {
-            "group": "Banks",
-            "pages": ["api-reference/bank/get", "api-reference/bank/lookup"]
-          }
+        "group": "Virtual Accounts",
+        "pages": [
+          "api-reference/virtual-account/get",
+          "api-reference/virtual-account/get-by-id",
+          "api-reference/virtual-account/create",
+          "api-reference/virtual-account/suspend-by-id",
+          "api-reference/virtual-account/get-accout-activities"
         ]
+      },
+      {
+        "group": "Banks",
+        "pages": ["api-reference/bank/get", "api-reference/bank/lookup"]
       }
     ]
   },
