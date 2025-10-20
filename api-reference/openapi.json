@@ -30,6 +30,16 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "description": "Idempotency key for the request",
+            "required": false,
+            "schema": {
+              "example": "1234567890-1234567890-1234567890",
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -288,6 +298,16 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "description": "Idempotency key for the request",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "1234567890-1234567890-1234567890"
             }
           }
         ],

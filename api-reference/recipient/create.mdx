@@ -2,3 +2,28 @@
 title: 'Create Recipient'
 openapi: 'POST /v1/recipients'
 ---
+
+HashRails supports two types of recipients with different required fields:
+
+### Crypto Recipients
+
+For crypto recipients, you need:
+
+- `wallet_address` - Ethereum wallet address (required for crypto)
+- `network` - Blockchain network (e.g., Polygon, Ethereum)
+- `symbol` - Cryptocurrency symbol (e.g., USDC, USDT, BTC)
+
+### Fiat Recipients
+
+For fiat recipients, you need:
+
+- `account_number` - Bank account number (10 digits)
+- `bank_code` - Bank code (get available codes from [Get Banks](/api-reference/bank/get))
+- `currency` - Fiat currency (e.g., NGN, USD, EUR)
+
+### Common Fields
+
+Both types require:
+
+- `name` - Recipient name
+- `type` - Either "crypto" or "fiat"
