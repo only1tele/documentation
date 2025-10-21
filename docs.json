@@ -30,7 +30,8 @@
           "api-reference/virtual-account/get-by-id",
           "api-reference/virtual-account/create",
           "api-reference/virtual-account/suspend-by-id",
-          "api-reference/virtual-account/get-accout-activities"
+          "api-reference/virtual-account/get-accout-activities",
+          "api-reference/virtual-account/get-accout-activity"
         ]
       },
       {

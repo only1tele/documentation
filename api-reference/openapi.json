@@ -545,6 +545,66 @@
         "tags": ["Public Virtual Accounts API"]
       }
     },
+    "/v1/virtual-accounts/{id}/activities/{activityId}": {
+      "get": {
+        "description": "Get a virtual account activity by ID",
+        "operationId": "PublicVirtualAccountController_",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "API key for authentication",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "activityId",
+            "required": true,
+            "in": "path",
+            "description": "Activity ID",
+            "schema": {}
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Virtual Account ID",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Virtual account activity fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Virtual account activity fetched successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PublicVirtualAccountActivityResponseDto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Virtual account or activity not found"
+          }
+        },
+        "summary": "Get a virtual account activity by ID",
+        "tags": ["Public Virtual Accounts API"]
+      }
+    },
     "/v1/banks/lookup": {
       "post": {
         "description": "Lookup an account by account number and bank code",
@@ -929,7 +989,7 @@
           },
           "bvn": {
             "type": "string",
-            "description": "Expiry date for the virtual account",
+            "description": "BVN of the client getting the virtual account",
             "example": "12345678901"
           }
         },
@@ -1102,12 +1162,6 @@
             "type": "string",
             "description": "Creation timestamp",
             "example": "2025-09-12T15:08:42.000Z"
-          },
-          "updated_at": {
-            "format": "date-time",
-            "type": "string",
-            "description": "Last update timestamp",
-            "example": "2025-09-12T15:09:21.000Z"
           }
         },
         "required": [
