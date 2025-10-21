@@ -933,7 +933,7 @@
             "example": "12345678901"
           }
         },
-        "required": ["currency"]
+        "required": ["currency", "recipient_id"]
       },
       "PublicVirtualAccountResponseDto": {
         "type": "object",
