@@ -36,7 +36,11 @@
       },
       {
         "group": "Banks",
-        "pages": ["api-reference/bank/get", "api-reference/bank/lookup"]
+        "pages": [
+          "api-reference/bank/get",
+          "api-reference/bank/lookup",
+          "api-reference/bank/get-rates"
+        ]
       }
     ]
   },

@@ -712,6 +712,179 @@
         "summary": "Get all banks",
         "tags": ["Public Banks"]
       }
+    },
+    "/v1/rates": {
+      "get": {
+        "operationId": "PublicRateController_",
+        "parameters": [
+          {
+            "name": "fromCurrency",
+            "required": true,
+            "in": "query",
+            "description": "Source currency (fiat or crypto)",
+            "schema": {
+              "enum": [
+                "NGN",
+                "GHS",
+                "KES",
+                "ZAR",
+                "USD",
+                "EUR",
+                "GBP",
+                "USDC",
+                "USDT",
+                "BTC",
+                "ETH",
+                "BNB",
+                "MATIC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "toCurrency",
+            "required": true,
+            "in": "query",
+            "description": "Target currency (opposite type of fromCurrency)",
+            "schema": {
+              "enum": [
+                "NGN",
+                "GHS",
+                "KES",
+                "ZAR",
+                "USD",
+                "EUR",
+                "GBP",
+                "USDC",
+                "USDT",
+                "BTC",
+                "ETH",
+                "BNB",
+                "MATIC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "API key for authentication",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rate retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Rate retrieved successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "fromCurrency": {
+                          "type": "string",
+                          "example": "NGN",
+                          "description": "Source currency"
+                        },
+                        "toCurrency": {
+                          "type": "string",
+                          "example": "USDT",
+                          "description": "Target currency"
+                        },
+                        "rate": {
+                          "type": "string",
+                          "example": "1560.63",
+                          "description": "Exchange rate formatted to 4 decimal places"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": ["live", "inactive"],
+                          "example": "live",
+                          "description": "Rate status"
+                        },
+                        "timestamp": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-01-01T00:00:00.000Z",
+                          "description": "ISO 8601 timestamp"
+                        }
+                      },
+                      "required": [
+                        "fromCurrency",
+                        "toCurrency",
+                        "rate",
+                        "status",
+                        "timestamp"
+                      ]
+                    }
+                  },
+                  "required": ["message", "data"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid currency combination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Rate calculation requires opposite currency types (one fiat, one crypto)"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "example": "HTTP_EXCEPTION"
+                        },
+                        "timestamp": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-01-01T00:00:00.000Z"
+                        },
+                        "path": {
+                          "type": "string",
+                          "example": "/v1/public/rates"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key"
+          },
+          "429": {
+            "description": "Too many requests - Rate limit exceeded"
+          }
+        },
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "summary": "Get exchange rate for currency pair",
+        "tags": ["Public Rates"]
+      }
     }
   },
 
