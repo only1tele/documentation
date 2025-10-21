@@ -922,9 +922,9 @@
             "enum": ["USD", "NGN", "CAD"],
             "example": "USD"
           },
-          "settlement_id": {
+          "recipient_id": {
             "type": "string",
-            "description": "Settlement ID for the virtual account",
+            "description": "Recipient ID for the virtual account",
             "example": "1263995f-e317-44ab-b8ea-3dc2dc5a08bb"
           },
           "bvn": {
@@ -981,7 +981,7 @@
             "example": true
           },
           "recipient": {
-            "description": "Settlement information for the virtual account",
+            "description": "Recipient information for the virtual account",
             "example": {
               "id": "1263995f-e317-44ab-b8ea-3dc2dc5a08bb",
               "network": "ethereum",
