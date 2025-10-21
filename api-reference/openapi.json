@@ -563,15 +563,21 @@
             "name": "activityId",
             "required": true,
             "in": "path",
-            "description": "Activity ID",
-            "schema": {}
+            "description": "Activity ID to retrieve",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
           },
           {
             "name": "id",
             "required": true,
             "in": "path",
             "description": "Virtual Account ID",
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
           }
         ],
         "responses": {
@@ -978,18 +984,18 @@
         "properties": {
           "currency": {
             "type": "string",
-            "description": "Currency for the virtual account",
+            "description": "Currency of the virtual account",
             "enum": ["USD", "NGN", "CAD"],
             "example": "USD"
           },
           "recipient_id": {
             "type": "string",
-            "description": "Recipient ID for the virtual account",
+            "description": "Recipient ID (where the funds will be settled to)",
             "example": "1263995f-e317-44ab-b8ea-3dc2dc5a08bb"
           },
           "bvn": {
             "type": "string",
-            "description": "BVN of the client getting the virtual account",
+            "description": "BVN of the virtual account owner",
             "example": "12345678901"
           }
         },
