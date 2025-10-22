@@ -12,7 +12,11 @@
     "groups": [
       {
         "group": "Getting Started",
-        "pages": ["index", "api-reference/authentication"]
+        "pages": [
+          "index",
+          "api-reference/authentication",
+          "api-reference/webhooks"
+        ]
       },
 
       {

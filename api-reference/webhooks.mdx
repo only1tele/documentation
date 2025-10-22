@@ -1,0 +1,96 @@
+---
+title: 'Webhooks'
+---
+
+Webhooks allow you to receive real-time notifications about payment events. When a payment is processed, we'll send a POST request to your configured webhook URL with the event details.
+
+## Supported Events
+
+- **payment.received** - Triggered when a payment is received
+- **payment.completed** - Triggered when a payment is settled and fully completed
+
+## Configuration
+
+Configure your webhook URL in the [HashRails dashboard](https://dashboard.railsfromthecrypt.com/api-management/webhooks) to start receiving payment notifications. The webhook will be called with the headers listed below.
+
+## Headers
+
+When we send webhook notifications, the following headers are included:
+
+**Content-Type**: `application/json` - Content type of the payload
+
+**x-webhook-event**: `payment.received` - The event type being sent
+
+**x-webhook-timestamp**: `1761132905` - Unix timestamp of the webhook
+
+**x-webhook-signature**: `ac810d6feefc67c2eb0927fe2b932b8ef6...` - HMAC signature for verification
+
+**user-agent**: `Hashrails-Webhook/1.0` - Webhook client identifier
+
+## Signature Validation
+
+**Important:** Always validate the webhook signature to ensure the request is actually from HashRails and hasn't been tampered with.
+
+Here's an example of how to validate the signature:
+
+```javascript
+var crypto = require('crypto');
+var SECRET = 'your-webhook-secret'; // Your webhook secret from dashboard
+var PAYLOAD = '{"event":"payment.received",...}'; // Stringified JSON payload from webhook
+var hash = crypto.createHmac('SHA256', SECRET).update(PAYLOAD).digest('hex');
+console.log(hash.toUpperCase()); // Compare this with x-webhook-signature header
+```
+
+## Payload
+
+### Payment Received Event
+
+```json
+{
+  "event": "payment.received",
+  "id": "f5802874-5974-4993-8665-81fa5f11fad9",
+  "reference": "TXN-ZJIXYEZH6IU0K4WB",
+  "amount": "1000.00",
+  "transaction_hash": null,
+  "session_id": "100004240121191726000236980560",
+  "rate": "2214.5000000000",
+  "fees": "150",
+  "destination": {
+    "amount": "2214500",
+    "currency": "USDT"
+  },
+  "sender": {
+    "name": "Kunle Nnaji",
+    "account_number": "9035418377",
+    "bank": "Paycom (Opay)",
+    "bank_routing_number": "305",
+    "currency": "NGN"
+  },
+  "timestamp": 1761132905,
+  "webhook_id": "032f55d1-be37-474b-86c5-429a39adc943"
+}
+```
+
+## Field Descriptions
+
+| Field                        | Type   | Description                                            |
+| ---------------------------- | ------ | ------------------------------------------------------ |
+| `event`                      | string | Event type (`payment.received` or `payment.completed`) |
+| `id`                         | string | Unique transaction identifier                          |
+| `reference`                  | string | Transaction reference number                           |
+| `amount`                     | string | Payment amount in source currency                      |
+| `transaction_hash`           | string | Blockchain transaction hash (null for fiat payments)   |
+| `session_id`                 | string | NIBSS session ID                                       |
+| `rate`                       | string | Exchange rate used for conversion                      |
+| `fees`                       | string | Transaction fees                                       |
+| `destination`                | object | Destination payment details (null for fiat payments)   |
+| `destination.amount`         | string | Amount in destination currency                         |
+| `destination.currency`       | string | Destination currency code                              |
+| `sender`                     | object | Sender payment details                                 |
+| `sender.name`                | string | Sender's name                                          |
+| `sender.account_number`      | string | Sender's account number                                |
+| `sender.bank`                | string | Sender's bank name                                     |
+| `sender.bank_routing_number` | string | Bank routing number                                    |
+| `sender.currency`            | string | Sender's currency                                      |
+| `timestamp`                  | number | Unix timestamp of the event                            |
+| `webhook_id`                 | string | Unique webhook delivery identifier                     |
