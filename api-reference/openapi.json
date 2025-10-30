@@ -23,7 +23,7 @@
         "operationId": "PublicRecipientController_",
         "parameters": [
           {
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header",
             "description": "API key for authentication",
             "required": true,
@@ -32,7 +32,7 @@
             }
           },
           {
-            "name": "Idempotency-Key",
+            "name": "x-x-idempotency-key",
             "in": "header",
             "description": "Idempotency key for the request",
             "required": false,
@@ -87,7 +87,7 @@
         "operationId": "PublicRecipientController_",
         "parameters": [
           {
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header",
             "description": "API key for authentication",
             "required": true,
@@ -156,7 +156,7 @@
         "operationId": "PublicRecipientController_",
         "parameters": [
           {
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header",
             "description": "API key for authentication",
             "required": true,
@@ -203,7 +203,7 @@
         "operationId": "PublicVirtualAccountController_",
         "parameters": [
           {
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header",
             "description": "API key for authentication",
             "required": true,
@@ -292,7 +292,7 @@
         "operationId": "PublicVirtualAccountController_",
         "parameters": [
           {
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header",
             "description": "API key for authentication",
             "required": true,
@@ -301,7 +301,7 @@
             }
           },
           {
-            "name": "Idempotency-Key",
+            "name": "x-idempotency-key",
             "in": "header",
             "description": "Idempotency key for the request",
             "required": false,
@@ -361,7 +361,7 @@
         "operationId": "PublicVirtualAccountController_",
         "parameters": [
           {
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header",
             "description": "API key for authentication",
             "required": true,
@@ -412,7 +412,7 @@
         "operationId": "PublicVirtualAccountController_",
         "parameters": [
           {
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header",
             "description": "API key for authentication",
             "required": true,
@@ -478,7 +478,7 @@
         "operationId": "PublicVirtualAccountController_",
         "parameters": [
           {
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header",
             "description": "API key for authentication",
             "required": true,
@@ -551,7 +551,7 @@
         "operationId": "PublicVirtualAccountController_",
         "parameters": [
           {
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header",
             "description": "API key for authentication",
             "required": true,
@@ -617,7 +617,7 @@
         "operationId": "PublicBankController_",
         "parameters": [
           {
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header",
             "description": "API key for authentication",
             "required": true,
@@ -671,7 +671,7 @@
         "description": "Get all banks",
         "parameters": [
           {
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header",
             "description": "API key for authentication",
             "required": true,
@@ -766,7 +766,7 @@
             }
           },
           {
-            "name": "X-API-Key",
+            "name": "x-api-key",
             "in": "header",
             "description": "API key for authentication",
             "required": true,
