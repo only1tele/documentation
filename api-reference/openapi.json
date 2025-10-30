@@ -32,7 +32,7 @@
             }
           },
           {
-            "name": "x-x-idempotency-key",
+            "name": "x-idempotency-key",
             "in": "header",
             "description": "Idempotency key for the request",
             "required": false,
